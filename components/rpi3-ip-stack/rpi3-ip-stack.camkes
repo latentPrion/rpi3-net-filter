@@ -1,0 +1,22 @@
+import <std_connector.camkes>;
+
+import <bsp/bsp.camkes>;
+import <eth-nic-enc28j60/eth-nic-enc28j60.camkes>;
+
+import <SocketsApi.idl4>;
+import <IpStackMgmtApi.idl4>;
+
+component Rpi3IpStack {
+	dataport Buf tx;
+	dataport Buf rx;
+	provides SocketsApi sockets_api;
+	provides IpStackMgmtApi mgmt_api;
+
+	composition {
+		component Rpi3ChipsetBase chipsetbase;
+		component EthNicEnc28j60Drv eth_nic;
+
+		connection seL4Notification gpio_to_eth_nic_irq(
+			from chipsetbase.eth_nic_irq0, to eth_nic.irq0);
+	}
+}

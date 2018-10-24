@@ -1,0 +1,23 @@
+import <std_connector.camkes>;
+
+import <rpi3-ip-stack/rpi3-ip-stack.camkes>;
+import <main/main.camkes>;
+
+import <SocketsApi.idl4>;
+import <IpStackMgmtApi.idl4>;
+
+assembly {
+	composition {
+		component Main main;
+		component Rpi3IpStack ip_stack;
+
+		connection seL4SharedData main_to_ip_stack_tx_shmem(
+			from main.tx, to ip_stack.tx);
+		connection seL4SharedData main_to_ip_stack_rx_shmem(
+			from main.rx, to ip_stack.rx);
+		connection seL4RPCCall main_to_ip_stack_sockets_api_rpc(
+			from main.sockets_api, to ip_stack.sockets_api);
+		connection seL4RPCCall main_to_ip_stack_mgmt_api_rpc(
+			from main.mgmt_api, to ip_stack.mgmt_api);
+	}
+}

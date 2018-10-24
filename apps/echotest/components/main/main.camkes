@@ -1,0 +1,9 @@
+import <SocketsApi.idl4>;
+import <IpStackMgmtApi.idl4>;
+
+component Main {
+	dataport Buf tx;
+	dataport Buf rx;
+	uses SocketsApi sockets_api;
+	uses IpStackMgmtApi mgmt_api;
+}

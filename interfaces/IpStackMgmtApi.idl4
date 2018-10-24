@@ -1,0 +1,3 @@
+procedure IpStackMgmtApi {
+	int configure(int a);
+}

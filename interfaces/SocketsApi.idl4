@@ -1,0 +1,11 @@
+procedure SocketsApi {
+	int socket(int a);
+	int bind(int a);
+	int listen(int a);
+
+	int connect(int a);
+	int accept(int a);
+
+	int send(int a);
+	int recv(int a);
+}

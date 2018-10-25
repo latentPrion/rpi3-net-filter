@@ -2,6 +2,14 @@ cmake_minimum_required(VERSION 3.8.2)
 
 project(Rpi3NetFilter C)
 
+set(PLATFORM "rpi3" CACHE STRING "Platform to use; forced to rpi3." FORCE)
+if (NOT RELEASE)
+	set(RELEASE OFF CACHE BOOL "")
+endif()
+if (NOT VERIFICATION)
+	set(VERIFICATION OFF CACHE BOOL "")
+endif()
+
 set(KernelArch arm CACHE STRING "" FORCE)
 set(KernelArmSel4Arch aarch32 CACHE STRING "" FORCE)
 set(KernelARMPlatform rpi3 CACHE STRING "" FORCE)
@@ -26,3 +34,9 @@ CAmkESAddImportPath(components)
 
 add_subdirectory(components/rpi3-ip-stack)
 add_subdirectory(apps/echotest)
+
+if (SIMULATION)
+    ApplyCommonSimulationSettings(${KernelArch})
+endif()
+
+ApplyCommonReleaseVerificationSettings(${RELEASE} FALSE)
